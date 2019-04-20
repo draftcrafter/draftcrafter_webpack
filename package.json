@@ -1,0 +1,31 @@
+{
+  "name": "draftcrafter_webpack",
+  "version": "1.0.0",
+  "description": "Webpack starter template (webpack, sass, babel, autoprefixer, path, post css, webpack-merge, copy-webpack-plugin)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/draftcrafter/draftcrafter_webpack.git"
+  },
+  "keywords": [
+    "webpack",
+    "sass",
+    "babel",
+    "autoprefixer",
+    "path",
+    "post",
+    "css",
+    "webpack-merge",
+    "copy-webpack-plugin"
+  ],
+  "author": "draftcrafter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/draftcrafter/draftcrafter_webpack/issues"
+  },
+  "homepage": "https://github.com/draftcrafter/draftcrafter_webpack#readme"
+}
