@@ -1,18 +1,35 @@
+# Default
+.gulp
+.idea
+.vscode
+
+# Node
 node_modules
-package-lock.json
 
-# Ignore Mac OS desktop services store
-.DS_Store
-# Ignore Windows desktop setting file
-desktop.ini
+# Dist & test
+test
+dist
 
+# BD, logs
 *.log
+*.sql
+*.sqlite
 *.csv
 *.dat
 *.out
-
-.idea/
-
-dist
 *.min.js
 *.min.css
+
+# Other
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+package-lock.json
+
+# Special
+Thumbs.db
+Desktop.ini
+.DS_Store*
+ehthumbs.db
+Icon?
