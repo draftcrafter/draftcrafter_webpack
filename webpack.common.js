@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -6,10 +7,15 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   mode: 'production',
-  entry: { main: "./src/index.js" },
+  entry: './src/index.js',
+  //entry: {
+  //  index: './src/index.js',
+    //print: path.join(__dirname, './src/print.js'),
+  //},
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].js',
+    chunkFilename: 'js/[name].bundle.js'
   },
   module: {
     rules: [
@@ -19,7 +25,7 @@ module.exports = {
         use: { loader: "babel-loader" }
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.scss$/,
         use: [
           'style-loader',
           MiniCssExtractPlugin.loader,
@@ -35,58 +41,47 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'img/'
+              outputPath: './img',
+              useRelativePath: true
             }
           },
           {
             loader: "image-webpack-loader",
             options: {
-              bypassOnDebug: true
+              mozjpeg: {
+                progressive: true,
+                quality: 70
+              }
             }
           },
         ],
       },
       {
-        test: /\.(woff(2)?|ttf|eot|otf)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
-        ]
+        test: /\.html$/,
+        exclude: /index\.html$/, // you need to exclude your base template (unless you do not want this plugin own templating feature)
+        loader: "html"
       }
     ]
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'), // boolean | string | array, static file location
-    port: 8080,
-    compress: false, // enable gzip compression
-    historyApiFallback: false, // true for index.html upon 404, object for multiple paths
-    https: false, // true for self-signed, object for cert authority
-    noInfo: true, // only errors & warns on hot reload
-    overlay: {
-      warnings: true,
-      errors: true
-    }
   },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
+      //chunkFilename: 'css/[id].css',
     }),
     new HtmlWebpackPlugin({
-      inject: false,
-      hash: false,
       template: "./src/index.html",
-      filename: "index.html"
+      inject: false
     }),
     new CopyWebpackPlugin([
-      { from: path.join(__dirname, 'src/img'), to: './dist/img' },
-      //{ from: path.join(__dirname, 'src/fonts'), to: './dist/fonts' },
-      { from: path.join(__dirname, 'src/static'), to: path.join(__dirname, 'dist/') },
-    ])
+      { from: path.join(__dirname, 'src/img'), to: 'img' },
+      { from: path.join(__dirname, 'src/fonts'), to: 'fonts' },
+      { from: path.join(__dirname, 'src/static'), to: '' },
+    ]),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+    })
   ]
 };
