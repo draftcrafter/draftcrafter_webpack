@@ -10,7 +10,7 @@ module.exports = {
   entry: './src/index.js',
   //entry: {
   //  index: './src/index.js',
-    //print: path.join(__dirname, './src/print.js'),
+  //print: path.join(__dirname, './src/print.js'),
   //},
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -51,6 +51,21 @@ module.exports = {
               mozjpeg: {
                 progressive: true,
                 quality: 70
+              },
+              // optipng.enabled: false will disable optipng
+              optipng: {
+                enabled: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              // the webp option will enable WEBP
+              webp: {
+                quality: 75
               }
             }
           },
@@ -71,6 +86,13 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+      minify: {
+        html5: true,
+        collapseWhitespace: true,
+        caseSensitive: true,
+        removeComments: true,
+        removeEmptyElements: true
+      },
       inject: false
     }),
     new CopyWebpackPlugin([
